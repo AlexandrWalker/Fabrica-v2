@@ -1,24 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-  
-
   /**
-   * Инициализация Lenis
+   * Подключение GSAP
    */
-  if (!window.lenis) {
-    window.lenis = new Lenis({
-      smooth: true,
-      autoResize: false
-    });
+  gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
-    gsap.ticker.add((time) => {
-      window.lenis.raf(time * 1000);
-    });
-
-    gsap.ticker.lagSmoothing(0);
-  }
-
-  const lenis = window.lenis;
+  const scrollSmoother = ScrollSmoother.create({
+    smooth: 1,
+    effects: true,
+    smoothTouch: 0.1
+  });
 
   /**
    * Попапы
@@ -28,13 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
       static stack = [];
       static BASE_Z = 600;
 
-      constructor(popupEl, lenis) {
+      constructor(popupEl) {
         if (!popupEl) return;
 
         this.isClosingDrag = false;
-
         this.popup = popupEl;
-        this.lenis = lenis;
 
         this.head = popupEl.querySelector('[data-popup-head]');
         this.scrollEl = popupEl.querySelector('[data-popup-scroll]');
@@ -81,16 +70,14 @@ document.addEventListener('DOMContentLoaded', () => {
         this.popup.style.transform = 'translateY(0)';
         this.popup.dataset.open = 'true';
 
-        if (this.lenis && stack.length === 1 && !this.lenis.isStopped) {
-          this.lenis.stop();
+        if (stack.length === 1) {
+          scrollSmoother.paused(true); // остановка скролла при открытии попапа
         }
-        BottomPopup.scrollY = window.lenis
-          ? window.lenis.scroll
-          : window.scrollY;
+
+        BottomPopup.scrollY = scrollSmoother ? scrollSmoother.scrollTop() : window.scrollY;
 
         document.documentElement.classList.add('popup-open');
 
-        // --- history для back button ---
         if (!this._historyAdded) {
           history.pushState({ popup: true }, '');
           this._historyAdded = true;
@@ -119,16 +106,12 @@ document.addEventListener('DOMContentLoaded', () => {
           const scrollY = BottomPopup.scrollY;
 
           requestAnimationFrame(() => {
-            this.lenis.scrollTo(scrollY, { immediate: true });
+            scrollSmoother.scrollTo(scrollY, 0); // прокрутка к сохранённой позиции
             document.documentElement.classList.remove('popup-open');
-
-            if (this.lenis.isStopped) {
-              this.lenis.start();
-            }
+            scrollSmoother.paused(false); // возобновляем скролл
           });
         }
 
-        // важно: флаг только при НЕ popstate
         if (!fromPopstate) {
           this._ignorePopstate = true;
         }
@@ -287,36 +270,36 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // --- Инициализация ---
+    // --- Инициализация попапов ---
     const popups = {
-      menu: new BottomPopup(document.getElementById('menu'), window.lenis),
-      dish: new BottomPopup(document.getElementById('dish'), window.lenis),
-      filter: new BottomPopup(document.getElementById('filter'), window.lenis),
-      branch: new BottomPopup(document.getElementById('branch'), window.lenis),
-      reviews: new BottomPopup(document.getElementById('reviews'), window.lenis),
-      reviewsWrite: new BottomPopup(document.getElementById('reviewsWrite'), window.lenis),
-      rules: new BottomPopup(document.getElementById('rules'), window.lenis),
-      loyalty: new BottomPopup(document.getElementById('loyalty'), window.lenis),
-      catering: new BottomPopup(document.getElementById('catering'), window.lenis),
-      seating: new BottomPopup(document.getElementById('seating'), window.lenis),
-      slang: new BottomPopup(document.getElementById('slang'), window.lenis),
-      contacts: new BottomPopup(document.getElementById('contacts'), window.lenis),
-      offers: new BottomPopup(document.getElementById('offers'), window.lenis),
-      offersInner: new BottomPopup(document.getElementById('offersInner'), window.lenis),
-      shares: new BottomPopup(document.getElementById('shares'), window.lenis),
-      profile: new BottomPopup(document.getElementById('profile'), window.lenis),
-      profileCard: new BottomPopup(document.getElementById('profileCard'), window.lenis),
-      profileDetails: new BottomPopup(document.getElementById('profileDetails'), window.lenis),
-      reg: new BottomPopup(document.getElementById('reg'), window.lenis),
-      regCode: new BottomPopup(document.getElementById('regCode'), window.lenis),
-      cards: new BottomPopup(document.getElementById('cards'), window.lenis),
-      cardsAdd: new BottomPopup(document.getElementById('cardsAdd'), window.lenis),
-      branchSelect: new BottomPopup(document.getElementById('branchSelect'), window.lenis),
-      addressAdd: new BottomPopup(document.getElementById('addressAdd'), window.lenis),
-      addressEdit: new BottomPopup(document.getElementById('addressEdit'), window.lenis),
-      afisha: new BottomPopup(document.getElementById('afisha'), window.lenis),
-      favorite: new BottomPopup(document.getElementById('favorite'), window.lenis),
-      search: new BottomPopup(document.getElementById('search'), window.lenis)
+      menu: new BottomPopup(document.getElementById('menu')),
+      dish: new BottomPopup(document.getElementById('dish')),
+      filter: new BottomPopup(document.getElementById('filter')),
+      branch: new BottomPopup(document.getElementById('branch')),
+      reviews: new BottomPopup(document.getElementById('reviews')),
+      reviewsWrite: new BottomPopup(document.getElementById('reviewsWrite')),
+      rules: new BottomPopup(document.getElementById('rules')),
+      loyalty: new BottomPopup(document.getElementById('loyalty')),
+      catering: new BottomPopup(document.getElementById('catering')),
+      seating: new BottomPopup(document.getElementById('seating')),
+      slang: new BottomPopup(document.getElementById('slang')),
+      contacts: new BottomPopup(document.getElementById('contacts')),
+      offers: new BottomPopup(document.getElementById('offers')),
+      offersInner: new BottomPopup(document.getElementById('offersInner')),
+      shares: new BottomPopup(document.getElementById('shares')),
+      profile: new BottomPopup(document.getElementById('profile')),
+      profileCard: new BottomPopup(document.getElementById('profileCard')),
+      profileDetails: new BottomPopup(document.getElementById('profileDetails')),
+      reg: new BottomPopup(document.getElementById('reg')),
+      regCode: new BottomPopup(document.getElementById('regCode')),
+      cards: new BottomPopup(document.getElementById('cards')),
+      cardsAdd: new BottomPopup(document.getElementById('cardsAdd')),
+      branchSelect: new BottomPopup(document.getElementById('branchSelect')),
+      addressAdd: new BottomPopup(document.getElementById('addressAdd')),
+      addressEdit: new BottomPopup(document.getElementById('addressEdit')),
+      afisha: new BottomPopup(document.getElementById('afisha')),
+      favorite: new BottomPopup(document.getElementById('favorite')),
+      search: new BottomPopup(document.getElementById('search'))
     };
 
     for (let key in popups) BottomPopup.register(key, popups[key]);
@@ -327,7 +310,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const target = btn.dataset.popupTarget;
         const popup = BottomPopup.get(target);
         if (!popup) return;
-
         popup.toggleOrReopen();
       });
     });
@@ -340,21 +322,66 @@ document.addEventListener('DOMContentLoaded', () => {
       const top = stack[stack.length - 1];
       if (!top || !top.isOpen()) return;
 
-      // если мы сами закрываем попап, игнорируем popstate
       if (top._ignorePopstate) {
         top._ignorePopstate = false;
         return;
       }
 
-      // закрываем верхний попап мгновенно
       top.close(0, true);
     });
   })();
 
   /**
+   * Инициализация swiper
+   */
+  if (document.querySelector('.swiper')) {
+
+    const swiper = new Swiper(".nav__slider", {
+      slidesPerGroup: 1,
+      slidesPerView: 'auto',
+      spaceBetween: 8,
+      grabCursor: true,
+
+      speed: 180,
+      touchRatio: 1.6,
+      resistanceRatio: 0.65,
+
+      centeredSlides: false,
+      centeredSlidesBounds: true,
+      centerInsufficientSlides: true,
+      slidesOffsetBefore: 0,
+      slidesOffsetAfter: 0,
+      loop: false,
+      simulateTouch: true,
+      watchOverflow: true,
+
+      direction: 'horizontal',
+      touchStartPreventDefault: true,
+      touchMoveStopPropagation: true,
+      threshold: 8,
+      touchAngle: 25, // ключевой параметр
+
+      freeMode: {
+        enabled: true,
+        momentum: true,
+        momentumRatio: 0.85, // меньше инерции
+        momentumVelocityRatio: 1,
+        momentumBounce: false, // убрать bounce
+        sticky: false // убрать залипание
+      },
+
+      mousewheel: {
+        forceToAxis: true,
+        sensitivity: 1,
+        releaseOnEdges: true
+      },
+    });
+  }
+
+  /**
    * Меняет класс у тега html на login
    */
-  (() => {
+  (function () {
     const loginBtn = document.querySelector('[data-log="login"]');
     const logoutBtn = document.querySelector('[data-log="logout"]');
 
@@ -373,7 +400,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /**
    * Шагово меняем фокус у инпута при вводе кода при регистрации
    */
-  (() => {
+  (function () {
     const regCode = document.getElementById('regCode');
     if (!regCode) return;
 
@@ -465,66 +492,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   })();
-
-  /**
-   * Инициализация swiper
-   */
-  if (document.querySelector('.swiper')) {
-
-    const swiper = new Swiper(".nav__slider", {
-      slidesPerGroup: 1,
-      slidesPerView: 'auto',
-      spaceBetween: 8,
-      grabCursor: true,
-
-      speed: 180,
-      touchRatio: 1.6,
-      resistanceRatio: 0.65,
-
-      centeredSlides: false,
-      centeredSlidesBounds: true,
-      centerInsufficientSlides: true,
-      slidesOffsetBefore: 0,
-      slidesOffsetAfter: 0,
-      loop: false,
-      simulateTouch: true,
-      watchOverflow: true,
-
-      direction: 'horizontal',
-      touchStartPreventDefault: true,
-      touchMoveStopPropagation: true,
-      threshold: 8,
-      touchAngle: 25, // ключевой параметр
-
-      freeMode: {
-        enabled: true,
-        momentum: true,
-        momentumRatio: 0.85, // меньше инерции
-        momentumVelocityRatio: 1,
-        momentumBounce: false, // убрать bounce
-        sticky: false // убрать залипание
-      },
-
-      mousewheel: {
-        forceToAxis: true,
-        sensitivity: 1,
-        releaseOnEdges: true
-      },
-    });
-
-    swiper.on('touchStart', () => {
-      if (window.lenis && !window.lenis.isStopped) {
-        window.lenis.stop();
-      }
-    });
-
-    swiper.on('touchEnd', () => {
-      if (window.lenis && window.lenis.isStopped) {
-        window.lenis.start();
-      }
-    });
-
-  }
 
   /**
   * Навигация по layout__nav внутри layout
