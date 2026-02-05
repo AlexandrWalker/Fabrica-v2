@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
       constructor(popupEl) {
         if (!popupEl) return;
 
+        this._smootherPausedByPopup = false;
+
         this.isClosingDrag = false;
         this.popup = popupEl;
 
@@ -41,11 +43,13 @@ document.addEventListener('DOMContentLoaded', () => {
         this.head.addEventListener('touchstart', this.onStart.bind(this), { passive: true });
         this.head.addEventListener('touchmove', this.onMove.bind(this), { passive: false });
         this.head.addEventListener('touchend', this.onEnd.bind(this));
+        this.head.addEventListener('touchcancel', this.onEnd.bind(this));
 
         if (this.scrollEl) {
           this.scrollEl.addEventListener('touchstart', this.onStart.bind(this), { passive: true });
           this.scrollEl.addEventListener('touchmove', this.onMove.bind(this), { passive: false });
           this.scrollEl.addEventListener('touchend', this.onEnd.bind(this));
+          this.scrollEl.addEventListener('touchcancel', this.onEnd.bind(this));
         }
       }
 
@@ -74,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
           scrollSmoother.paused(true); // остановка скролла при открытии попапа
         }
 
-        BottomPopup.scrollY = scrollSmoother ? scrollSmoother.scrollTop() : window.scrollY;
+        BottomPopup.scrollY = window.scrollY; // ScrollSmoother синхронизирует
 
         document.documentElement.classList.add('popup-open');
 
@@ -105,11 +109,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (stack.length === 0) {
           const scrollY = BottomPopup.scrollY;
 
-          requestAnimationFrame(() => {
-            scrollSmoother.scrollTo(scrollY, 0); // прокрутка к сохранённой позиции
-            document.documentElement.classList.remove('popup-open');
-            scrollSmoother.paused(false); // возобновляем скролл
-          });
+          scrollSmoother.scrollTop(BottomPopup.scrollY);
+          document.documentElement.classList.remove('popup-open');
+          scrollSmoother.paused(false);
         }
 
         if (!fromPopstate) {
@@ -153,14 +155,6 @@ document.addEventListener('DOMContentLoaded', () => {
           if (p !== this) p.popup.classList.add('is-under');
           else p.popup.classList.remove('is-under');
         });
-
-        if (
-          this.lenis &&
-          stack.length === 1 &&
-          !this.lenis.isStopped
-        ) {
-          this.lenis.stop();
-        }
       }
 
       // --- Toggle + Reopen для кнопок ---
@@ -220,13 +214,11 @@ document.addEventListener('DOMContentLoaded', () => {
         this.popup.style.transform = `translateY(${resistance / 10}rem)`;
         this.lastY = y;
 
-        // iOS: блокируем bounce ТОЛЬКО при drag попапа
-        if (this.isClosingDrag) {
-          e.preventDefault();
+        // --- ЗАМЕНА preventDefault на безопасное pause ScrollSmoother ---
+        if (this.isClosingDrag && !this._smootherPausedByPopup) {
+          scrollSmoother.paused(true);
+          this._smootherPausedByPopup = true;
         }
-
-        // --- полностью убрано preventDefault ---
-        // passive:true в слушателях позволяет iOS корректно scroll bounce
       }
 
       onEnd() {
@@ -243,6 +235,11 @@ document.addEventListener('DOMContentLoaded', () => {
         else {
           this.popup.style.transition = 'transform 0.35s cubic-bezier(0.25, 1, 0.3, 1)';
           this.popup.style.transform = 'translateY(0)';
+        }
+
+        if (this._smootherPausedByPopup) {
+          scrollSmoother.paused(false);
+          this._smootherPausedByPopup = false;
         }
 
         this.isDragging = false;
