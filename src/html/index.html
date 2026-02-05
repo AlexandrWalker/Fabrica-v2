@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ru" class="">
+@@include('blocks/head.html', {"title": "Фабрика"})
+
+<body>
+  <div class="wrapper">
+    <!-- Шапка -->
+    @@include('./blocks/header.html')
+
+    <!-- Попапы -->
+    <!-- Меню -->
+    @@include('./popups/menu.html')
+    <!-- Блюдо -->
+    @@include('./popups/dish.html')
+    <!-- Фильтр -->
+    @@include('./popups/filter.html')
+    <!-- Филиал -->
+    @@include('./popups/branch.html')
+    <!-- Отзывы -->
+    @@include('./popups/reviews.html')
+    <!-- Написать отзыв -->
+    @@include('./popups/reviewsWrite.html')
+    <!-- Фабричные правила -->
+    @@include('./popups/rules.html')
+    <!-- Программа лояльности -->
+    @@include('./popups/loyalty.html')
+    <!-- Кейтеринг -->
+    @@include('./popups/catering.html')
+    <!-- Рассадки -->
+    @@include('./popups/seating.html')
+    <!-- Фабричный сленг -->
+    @@include('./popups/slang.html')
+    <!-- Контакты -->
+    @@include('./popups/contacts.html')
+    <!-- Персональные предложения -->
+    @@include('./popups/offers.html')
+    <!-- Персональные предложения - деталка -->
+    @@include('./popups/offers-inner.html')
+    <!-- Акции -->
+    @@include('./popups/shares.html')
+    <!-- Профиль -->
+    @@include('./popups/profile.html')
+    <!-- Профиль -->
+    @@include('./popups/profile-card.html')
+    <!-- Мои данные -->
+    @@include('./popups/profile-details.html')
+    <!-- Регистрация -->
+    @@include('./popups/reg.html')
+    <!-- Регистрация, ввод кода -->
+    @@include('./popups/reg-code.html')
+    <!-- Карты -->
+    @@include('./popups/cards.html')
+    <!-- Добавить карту -->
+    @@include('./popups/cards-add.html')
+    <!-- Выбрать филиал -->
+    @@include('./popups/branch-select.html')
+    <!-- Добавить адрес -->
+    @@include('./popups/address-add.html')
+    <!-- Редактировать адрес -->
+    @@include('./popups/address-edit.html')
+    <!-- Афиша -->
+    @@include('./popups/afisha.html')
+    <!-- По кайфу! -->
+    @@include('./popups/favorite.html')
+    <!-- Поисковик -->
+    @@include('./popups/search.html')
+    <!-- main -->
+    <main id="main" class="main">
+
+      <section class="layout layout--first">
+        <div class="container">
+          <div class="layout__inner">
+            <button class="btn btn--beige btn--arrow" data-popup-target="branch">
+              <!-- Выберите ресторан -->
+              <div class="btn__text">
+                ​Советская улица, 33 <a href="javascript: void(0)">Изменить</a>
+              </div>
+              <i class="icon-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="hero" class="hero">
+        <div class="container">
+          <div class="hero__inner">
+
+            <div class="nav">
+
+              <div class="swiper nav__slider">
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide nav__slide">
+                    <a class="nav__item" href="#hookahs" data-id="hookahs">
+                      <div class="nav__item-img">
+                        <img src="./../images/icon/hookah.png" alt="">
+                      </div>
+                      <span class="nav__item-text">
+                        Кальяны
+                      </span>
+                    </a>
+                  </div>
+                  <div class="swiper-slide nav__slide">
+                    <a class="nav__item" href="#lunch" data-id="lunch">
+                      <div class="nav__item-img">
+                        <img src="./../images/icon/lunch.png" alt="">
+                      </div>
+                      <span class="nav__item-text">
+                        Завтрак
+                      </span>
+                    </a>
+                  </div>
+                  <div class="swiper-slide nav__slide">
+                    <a class="nav__item" href="#business-lunch" data-id="business-lunch">
+                      <div class="nav__item-img">
+                        <img src="./../images/icon/business-lunch.png" alt="">
+                      </div>
+                      <span class="nav__item-text">
+                        Ланч
+                      </span>
+                    </a>
+                  </div>
+                  <div class="swiper-slide nav__slide">
+                    <a class="nav__item" href="#salads" data-id="salads">
+                      <div class="nav__item-img">
+                        <img src="./../images/icon/salads.png" alt="">
+                      </div>
+                      <span class="nav__item-text">
+                        Салаты
+                      </span>
+                    </a>
+                  </div>
+                  <div class="swiper-slide nav__slide">
+                    <a class="nav__item" href="#osnovnoe" data-id="osnovnoe">
+                      <div class="nav__item-img">
+                        <img src="./../images/icon/goryacheye.png" alt="">
+                      </div>
+                      <span class="nav__item-text">
+                        Горячее
+                      </span>
+                    </a>
+                  </div>
+                  <div class="swiper-slide nav__slide">
+                    <a class="nav__item" href="#zakuski" data-id="zakuski">
+                      <div class="nav__item-img">
+                        <img src="./../images/icon/zakuski.png" alt="">
+                      </div>
+                      <span class="nav__item-text">
+                        Закуски
+                      </span>
+                    </a>
+                  </div>
+                  <div class="swiper-slide nav__slide">
+                    <a class="nav__item" href="#napitki" data-id="napitki">
+                      <div class="nav__item-img">
+                        <img src="./../images/icon/napitki.png" alt="">
+                      </div>
+                      <span class="nav__item-text">
+                        Напитки
+                      </span>
+                    </a>
+                  </div>
+                  <div class="swiper-slide nav__slide">
+                    <a class="nav__item" href="#cocktail" data-id="cocktail">
+                      <div class="nav__item-img">
+                        <img src="./../images/icon/cocktail.png" alt="">
+                      </div>
+                      <span class="nav__item-text">
+                        Коктейли
+                      </span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <section class="banners">
+        <div class="container">
+          <div class="banners__inner">
+            <div class="hero__banners">
+              <div class="hero__banners-link" data-popup-target="offersInner">
+                <img src="./../images/temp/hero-banner-1.png" alt="">
+                <i class="icon-chevron-right"></i>
+              </div>
+              <div class="hero__banners-link" data-popup-target="offersInner">
+                <img src="./../images/temp/hero-banner-2.png" alt="">
+                <i class="icon-chevron-right"></i>
+              </div>
+              <div class="hero__banners-link" data-popup-target="offersInner">
+                <img src="./../images/temp/hero-banner-3.png" alt="">
+                <i class="icon-chevron-right"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="layout">
+        <div class="container">
+          <div class="layout__inner">
+
+            <div class="layout__head">
+              <div class="layout__title">
+                <h2>
+                  Афиша
+                </h2>
+              </div>
+            </div>
+
+            <div class="afisha__items">
+              <div class="afisha__item" data-popup-target="afisha">
+                <div class="afisha__item-img">
+                  <img src="./../images/temp/afisha-1.png" alt="">
+                </div>
+                <div class="afisha__item-date">
+                  10.12.2025
+                </div>
+                <i class="icon-chevron-right"></i>
+              </div>
+              <div class="afisha__item" data-popup-target="afisha">
+                <div class="afisha__item-img">
+                  <img src="./../images/temp/afisha-2.png" alt="">
+                </div>
+                <div class="afisha__item-date">
+                  10.12.2025
+                </div>
+                <i class="icon-chevron-right"></i>
+              </div>
+              <div class="afisha__item" data-popup-target="afisha">
+                <div class="afisha__item-img">
+                  <img src="./../images/temp/afisha-1.png" alt="">
+                </div>
+                <div class="afisha__item-date">
+                  10.12.2025
+                </div>
+                <i class="icon-chevron-right"></i>
+              </div>
+              <div class="afisha__item" data-popup-target="afisha">
+                <div class="afisha__item-img">
+                  <img src="./../images/temp/afisha-2.png" alt="">
+                </div>
+                <div class="afisha__item-date">
+                  10.12.2025
+                </div>
+                <i class="icon-chevron-right"></i>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <section class="layout layout--carousel">
+        <div class="container">
+          <div class="layout__inner">
+
+            <div class="layout__head">
+              <div class="layout__title">
+                <h2>
+                  Вам понравится
+                </h2>
+              </div>
+            </div>
+
+            <div class="layout__items">
+              @@loop('./elements/card-item.html', './data/card-items.json')
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <section class="layout">
+        <div class="container">
+          <div class="layout__inner">
+
+            <div class="layout__head">
+              <div class="layout__title">
+                <h2>
+                  Сезонные <span>Specials</span>
+                </h2>
+              </div>
+            </div>
+
+            <div class="layout__items">
+              @@loop('./elements/card-item.html', './data/card-items.json')
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Каталог блюд -->
+      <section class="layout" id="hookahs">
+        <div class="container">
+          <div class="layout__inner">
+
+            <div class="layout__head">
+              <div class="layout__title">
+                <h2>
+                  Кальяны
+                </h2>
+              </div>
+            </div>
+
+            <div class="layout__items">
+              @@loop('./elements/card-item-hookahs.html', './data/card-items-hookahs.json')
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <section class="layout" id="lunch">
+        <div class="container">
+          <div class="layout__inner">
+
+            <div class="layout__head">
+              <div class="layout__title">
+                <h2>
+                  Завтраки
+                </h2>
+              </div>
+              <div class="layout__time">
+                <i class="icon-clock"></i>
+                <p>
+                  с 10:00 до 11:00
+                </p>
+              </div>
+            </div>
+
+            <div class="layout__items">
+              @@loop('./elements/card-item-lunch.html', './data/card-items-lunch.json')
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <section class="layout" id="business-lunch">
+        <div class="container">
+          <div class="layout__inner">
+
+            <div class="layout__head">
+              <div class="layout__title">
+                <h2>
+                  Бизнес-ланч
+                </h2>
+              </div>
+              <div class="layout__time">
+                <i class="icon-clock"></i>
+                <p>
+                  с 12:00 до 14:00
+                </p>
+              </div>
+            </div>
+
+            <div class="layout__items">
+              @@loop('./elements/card-item-business-lunch.html', './data/card-items-business-lunch.json')
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <section class="layout" id="salads">
+        <div class="container">
+          <div class="layout__inner">
+
+            <div class="layout__head">
+              <div class="layout__title">
+                <h2>
+                  Салаты
+                </h2>
+              </div>
+            </div>
+
+            <div class="layout__items">
+              @@loop('./elements/card-item-salads.html', './data/card-items-salads.json')
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Фиксированные навигации по блюдам внутри контейнера -->
+      <section class="layout" id="osnovnoe">
+        <div class="container">
+          <div class="layout__inner">
+
+            <div class="layout__head">
+              <div class="layout__title">
+                <h2>
+                  Горячее
+                </h2>
+              </div>
+            </div>
+
+            <div class="layout__nav">
+              <button class="layout__nav-item active" type="button" data-nav="hot">
+                Горячее
+              </button>
+              <button class="layout__nav-item" type="button" data-nav="pasta">
+                Паста
+              </button>
+              <button class="layout__nav-item" type="button" data-nav="sides">
+                Гарниры
+              </button>
+              <button class="layout__nav-item" type="button" data-nav="soups">
+                Супы
+              </button>
+            </div>
+
+            <div class="layout__items">
+              @@loop('./elements/card-item-osnovnoe.html', './data/card-items-osnovnoe.json')
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <section class="layout" id="zakuski">
+        <div class="container">
+          <div class="layout__inner">
+
+            <div class="layout__head">
+              <div class="layout__title">
+                <h2>
+                  Закуски
+                </h2>
+              </div>
+            </div>
+
+            <div class="layout__nav">
+              <button class="layout__nav-item active" type="button" data-nav="hot-zakuski">
+                Горячие закуски 
+              </button>
+              <button class="layout__nav-item" type="button" data-nav="cold-zakuski">
+                Холодные закуски
+              </button>
+            </div>
+
+            <div class="layout__items">
+              @@loop('./elements/card-item-zakuski.html', './data/card-items-zakuski.json')
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <section class="layout" id="napitki">
+        <div class="container">
+          <div class="layout__inner">
+
+            <div class="layout__head">
+              <div class="layout__title">
+                <h2>
+                  Напитки
+                </h2>
+              </div>
+            </div>
+
+            <div class="layout__nav">
+              <button class="layout__nav-item active" type="button" data-nav="hot-napitki">
+                Горячие
+              </button>
+              <button class="layout__nav-item" type="button" data-nav="cold-napitki">
+                Холодные
+              </button>
+            </div>
+
+            <div class="layout__items">
+              @@loop('./elements/card-item-drinks.html', './data/card-items-drinks.json')
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <section class="layout" id="cocktail">
+        <div class="container">
+          <div class="layout__inner">
+
+            <div class="layout__head">
+              <div class="layout__title">
+                <h2>
+                  Фабричные коктейли
+                </h2>
+              </div>
+            </div>
+
+            <div class="layout__nav">
+              <button class="layout__nav-item active" type="button" data-nav="aclo-cocktail">
+                Безалкогольные
+              </button>
+              <button class="layout__nav-item" type="button" data-nav="fabric-cocktail">
+                Фабричный алкоголь
+              </button>
+              <button class="layout__nav-item" type="button" data-nav="togo-cocktail">
+                Настойки и вино ту го 
+              </button>
+            </div>
+
+            <div class="layout__items">
+              @@loop('./elements/card-item-cocktails.html', './data/card-items-cocktails.json')
+            </div>
+
+          </div>
+        </div>
+      </section>
+      <!-- ./Каталог блюд -->
+    </main>
+    <!-- Панель -->
+    @@include('blocks/panel.html')
+    <!-- Подвал -->
+    @@include('blocks/footer.html')

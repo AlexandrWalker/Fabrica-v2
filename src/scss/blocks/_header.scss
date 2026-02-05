@@ -1,0 +1,109 @@
+@use './../mixins' as *;
+
+.header {
+  background-color: var(--white);
+  height: var(--header-height);
+  transition: transform 0.5s ease;
+  transform: translateY(0);
+  will-change: transform;
+
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1000;
+
+  .header-out:not(.popup-open) & {
+    transform: translateY(-100%);
+  }
+
+  .container {
+
+    @include domd {
+      padding: 0 3rem;
+    }
+  }
+
+  &__wrap {
+    border-radius: 0 0 1.6rem 1.6rem;
+    overflow: hidden;
+    background-color: var(--green-2);
+
+    position: relative;
+
+    height: 100%;
+
+    @include domd {
+      margin: 0 auto;
+      max-width: var(--container-width);
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    @include domd {
+      justify-content: center;
+      height: 100%;
+    }
+  }
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.7rem 0 1rem;
+  }
+
+  &__left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  &__right {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  &__search {
+    width: 2.2rem;
+    height: 2.2rem;
+
+    font-size: 2.2rem;
+    color: var(--white);
+
+    i {}
+  }
+
+  &__points {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+    width: fit-content;
+    height: 3rem;
+    padding: 0.5rem 1.5rem;
+    border-radius: 10rem;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0px 0px 14.4px rgba(0, 247, 255, 0.29);
+
+    font-weight: 700;
+    font-size: 1.4rem;
+    line-height: 100%;
+    color: var(--white);
+
+    i {
+      font-size: 1.6rem;
+    }
+  }
+}

@@ -1,0 +1,96 @@
+@use './../mixins' as *;
+
+.afisha {
+
+  &__items {
+    display: flex;
+    flex-direction: row;
+    gap: 0.8rem;
+
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+
+    padding: 0 var(--container-padding);
+    margin-left: calc(var(--container-padding) * -1);
+    width: 100vw;
+    width: calc(100% + (var(--container-padding) * 2));
+
+    @include domd {
+      gap: 2rem;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  &__item {
+    width: 22rem;
+    height: 18rem;
+    border-radius: 1.6rem;
+    overflow: hidden;
+    flex-shrink: 0;
+    /* для snap-effect */
+    scroll-snap-align: center;
+
+    position: relative;
+
+    @include domd {
+      width: calc(25% - (6rem / 4));
+      height: 22rem;
+    }
+
+    i {
+      background-color: var(--white);
+      border-radius: 50%;
+
+      font-size: 3rem;
+      color: var(--green);
+
+      position: absolute;
+      right: 2rem;
+      bottom: 2rem;
+    }
+
+    &:hover i {
+
+      @include domd {
+        background-color: var(--green);
+
+        color: var(--white);
+      }
+    }
+
+    &-img {
+
+      @include domd {
+        height: 100%;
+      }
+
+      img {
+
+        @include domd {
+          height: 100%;
+        }
+      }
+    }
+
+    &-date {
+      font-weight: 400;
+      font-size: 1.2rem;
+      line-height: 120%;
+      color: var(--white);
+
+      position: absolute;
+      bottom: 2.8rem;
+      left: 2rem;
+    }
+  }
+}

@@ -1,0 +1,96 @@
+@use './../mixins' as *;
+
+html {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  -webkit-tap-highlight-color: transparent;
+  --refRes: 402;
+
+  font-size: calc(100vw / var(--refRes) * 10);
+  scroll-behavior: smooth;
+
+  @include domd {
+    --refRes: 1920;
+  }
+}
+
+body {
+  min-width: 320px;
+  background-color: var(--white);
+
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 1.2rem;
+  line-height: 140%;
+  color: var(--black);
+  cursor: default;
+}
+
+html.popup-open,
+body.popup-open {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1 0 auto;
+  padding-top: var(--header-height);
+  padding-bottom: 13rem;
+}
+
+.footer {
+  flex: 0 0 auto;
+}
+
+section {
+  // overflow-x: hidden;
+  // overflow-y: hidden;
+  margin-bottom: 2rem;
+
+  position: relative;
+
+  @include domd {
+    margin-bottom: 3rem;
+  }
+}
+
+a {
+  color: inherit;
+  transition: all 0.5s ease;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+ul {}
+
+li {
+  padding-left: 2rem;
+  margin-bottom: 1rem;
+
+  position: relative;
+
+  &::before {
+    content: "";
+    display: block;
+    width: 0.25rem;
+    height: 0.25rem;
+    background-color: var(--black);
+    border-radius: 50%;
+    flex-shrink: 0;
+    position: absolute;
+    top: 0.7rem;
+    left: 0.9rem;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}

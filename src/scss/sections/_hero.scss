@@ -1,0 +1,184 @@
+@use './../mixins' as *;
+
+.hero {
+  margin-bottom: 0;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  background-color: var(--white);
+  overflow: hidden;
+  transition: top 0.5s ease;
+  will-change: top;
+
+  position: sticky;
+  top: var(--header-height);
+  z-index: 10;
+
+  .header-out:not(.popup-open) & {
+    top: 0;
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    @include domd {
+      overflow: hidden;
+    }
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: row;
+    gap: 0.8rem;
+
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+
+    padding: 0 var(--container-padding);
+    margin-left: calc(var(--container-padding) * -1);
+    width: 100vw;
+    width: calc(100% + (var(--container-padding) * 2));
+
+    @include domd {
+      gap: 2rem;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6rem;
+    width: calc(25% - (2.4rem / 4));
+    height: 8.4rem;
+    border-radius: 1.6rem;
+    flex-shrink: 0;
+    scroll-snap-align: center;
+    transition: all 0.5s ease;
+    background: radial-gradient(63.22% 50.92% at 50.57% 31.65%, rgba(6, 165, 170, 0.61) 0%, rgba(11, 49, 54, 0.61) 77.08%), rgba(24, 93, 102, 1);
+
+    color: var(--white);
+
+    @include domd {
+      width: calc((100% / 6) - (10rem / 6));
+    }
+
+    &.is-active {
+      background: #041818;
+    }
+
+    &:hover {
+
+      @include domd {
+        background: #041818;
+      }
+    }
+
+    &-img {
+      display: flex;
+      justify-content: center;
+      width: 4.8rem;
+      height: 4.8rem;
+      flex-shrink: 0;
+
+      img {
+        width: auto;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+
+    &-icon {
+      font-size: 4.8rem;
+      color: var(--white);
+      flex-shrink: 0;
+
+      i {
+        text-shadow: 0 0 10px var(--aqua-light), 0 0 20px var(--aqua-light);
+      }
+    }
+
+    &-text {
+      font-weight: 1000;
+      font-size: 1rem;
+      line-height: 120%;
+      text-align: center;
+    }
+  }
+
+  &__banners {
+    display: flex;
+    flex-direction: row;
+    gap: 0.8rem;
+
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+
+    padding: 0 var(--container-padding);
+    margin-left: calc(var(--container-padding) * -1);
+    width: 100vw;
+    width: calc(100% + (var(--container-padding) * 2));
+
+    &::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+      padding: 0;
+      margin: 0;
+    }
+
+    &-link {
+      width: 18.2rem;
+      height: 17.8rem;
+      border-radius: 1.6rem;
+      flex-shrink: 0;
+      scroll-snap-align: center;
+
+      position: relative;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      i {
+        background-color: var(--white);
+        border-radius: 50%;
+
+        font-size: 3rem;
+        color: var(--green);
+
+        position: absolute;
+        bottom: 2rem;
+        left: 2rem;
+      }
+
+      &:hover i {
+
+        @include domd {
+          background-color: var(--green);
+
+          color: var(--white);
+        }
+      }
+    }
+  }
+}

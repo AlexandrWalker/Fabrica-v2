@@ -1,0 +1,49 @@
+@use './../mixins' as *;
+
+.branch {
+
+  .layout {
+
+    &__block {
+
+      &-text {
+
+        span {
+          color: var(--green);
+        }
+      }
+    }
+  }
+}
+
+#branchSelect {
+
+  .layout {
+
+    &__inner {
+      padding-bottom: 8rem;
+    }
+
+    &__content {
+
+      .layout__block-text {
+
+        * {
+          font-weight: 700;
+          color: var(--green);
+        }
+      }
+    }
+
+    &__block {
+
+      &-text {
+
+        * {
+          font-weight: 500;
+          font-size: 1.4rem;
+        }
+      }
+    }
+  }
+}

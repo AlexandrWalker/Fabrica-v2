@@ -1,0 +1,35 @@
+@use './../mixins' as *;
+
+.dish {
+
+  .layout {
+
+    &__head {
+
+      &-cover {
+        // width: 100vw;
+        width: calc(100% + (var(--container-padding) * 2));
+        height: 26.8rem;
+        margin-left: calc(var(--container-padding) * -1);
+      }
+    }
+
+    &__block {
+      gap: 2rem;
+
+      &-title {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+
+        p {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+
+  .btn {
+    font-weight: 700;
+  }
+}
