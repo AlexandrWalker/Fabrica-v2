@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+  
+
   /**
    * Инициализация Lenis
    */
@@ -28,6 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       constructor(popupEl, lenis) {
         if (!popupEl) return;
+
+        this.isClosingDrag = false;
 
         this.popup = popupEl;
         this.lenis = lenis;
@@ -191,6 +195,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // --- Drag/Swipe логика ---
       onStart(e) {
+        if (e.touches[0].clientX < 20) {
+          this.isDragging = false;
+          return;
+        }
+
         this.startY = e.touches[0].clientY;
         this.lastY = this.startY;
         this.startTime = Date.now();
@@ -209,12 +218,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const isDraggingScrollContent = this.scrollEl && e.target.closest('[data-popup-scroll]');
 
         if (delta > 0) { // свайп вниз
+          this.isClosingDrag = true;
+
           if (isDraggingScrollContent) {
             const scrollTop = this.scrollEl.scrollTop;
             const startedOnHeader = this.startTarget.closest('[data-popup-head]');
             if (scrollTop > 0 && !startedOnHeader) {
-              this.lastY = y; // фиксируем последнее положение
-              return; // прокручиваем контент, не трогаем попап
+              this.lastY = y;
+              this.isClosingDrag = false;
+              return;
             }
           }
         } else return; // свайп вверх не трогаем
@@ -225,12 +237,19 @@ document.addEventListener('DOMContentLoaded', () => {
         this.popup.style.transform = `translateY(${resistance / 10}rem)`;
         this.lastY = y;
 
+        // iOS: блокируем bounce ТОЛЬКО при drag попапа
+        if (this.isClosingDrag) {
+          e.preventDefault();
+        }
+
         // --- полностью убрано preventDefault ---
         // passive:true в слушателях позволяет iOS корректно scroll bounce
       }
 
       onEnd() {
         if (!this.isDragging) return;
+
+        this.isClosingDrag = false;
 
         const delta = this.lastY - this.startY;
         const velocity = delta / Math.max(Date.now() - this.startTime, 1);
@@ -416,12 +435,104 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   /**
-   * Навигация по layout__nav внутри layout
-   * 
-   * Универсальная навигация по layout__nav для вертикальных и горизонтальных layout
-   * - Вертикальные layout: прокрутка страницы с помощью Lenis или window.scrollTo
-   * - Горизонтальные layout (layout--carousel): прокрутка контейнера layout__items по горизонтали
+   * Присваиваем класс у заполненного инпута
    */
+  (function () {
+    const form = document.querySelector('form');
+    if (form) {
+      const inputElements = document.querySelectorAll('.form-input');
+      const textareaElements = document.querySelectorAll('.form-textarea');
+      const className = 'filled';
+
+      inputElements.forEach(element => {
+        element.addEventListener('input', function () {
+          if (this.value.trim() !== '') {
+            element.classList.add(className);
+          } else {
+            element.classList.remove(className);
+          }
+        });
+      });
+
+      textareaElements.forEach(element => {
+        element.addEventListener('input', function () {
+          if (this.value.trim() !== '') {
+            element.classList.add(className);
+          } else {
+            element.classList.remove(className);
+          }
+        });
+      });
+    }
+  })();
+
+  /**
+   * Инициализация swiper
+   */
+  if (document.querySelector('.swiper')) {
+
+    const swiper = new Swiper(".nav__slider", {
+      slidesPerGroup: 1,
+      slidesPerView: 'auto',
+      spaceBetween: 8,
+      grabCursor: true,
+
+      speed: 180,
+      touchRatio: 1.6,
+      resistanceRatio: 0.65,
+
+      centeredSlides: false,
+      centeredSlidesBounds: true,
+      centerInsufficientSlides: true,
+      slidesOffsetBefore: 0,
+      slidesOffsetAfter: 0,
+      loop: false,
+      simulateTouch: true,
+      watchOverflow: true,
+
+      direction: 'horizontal',
+      touchStartPreventDefault: true,
+      touchMoveStopPropagation: true,
+      threshold: 8,
+      touchAngle: 25, // ключевой параметр
+
+      freeMode: {
+        enabled: true,
+        momentum: true,
+        momentumRatio: 0.85, // меньше инерции
+        momentumVelocityRatio: 1,
+        momentumBounce: false, // убрать bounce
+        sticky: false // убрать залипание
+      },
+
+      mousewheel: {
+        forceToAxis: true,
+        sensitivity: 1,
+        releaseOnEdges: true
+      },
+    });
+
+    swiper.on('touchStart', () => {
+      if (window.lenis && !window.lenis.isStopped) {
+        window.lenis.stop();
+      }
+    });
+
+    swiper.on('touchEnd', () => {
+      if (window.lenis && window.lenis.isStopped) {
+        window.lenis.start();
+      }
+    });
+
+  }
+
+  /**
+  * Навигация по layout__nav внутри layout
+  * 
+  * Универсальная навигация по layout__nav для вертикальных и горизонтальных layout
+  * - Вертикальные layout: прокрутка страницы с помощью Lenis или window.scrollTo
+  * - Горизонтальные layout (layout--carousel): прокрутка контейнера layout__items по горизонтали
+  */
   // (function () {
   //   const OFFSET_REM = 26;
 
@@ -562,96 +673,6 @@ document.addEventListener('DOMContentLoaded', () => {
   //     updateActiveNav();
   //   });
   // })();
-
-  /**
-   * Присваиваем класс у заполненного инпута
-   */
-  const form = document.querySelector('form');
-  if (form) {
-    const inputElements = document.querySelectorAll('.form-input');
-    const textareaElements = document.querySelectorAll('.form-textarea');
-    const className = 'filled';
-
-    inputElements.forEach(element => {
-      element.addEventListener('input', function () {
-        if (this.value.trim() !== '') {
-          element.classList.add(className);
-        } else {
-          element.classList.remove(className);
-        }
-      });
-    });
-
-    textareaElements.forEach(element => {
-      element.addEventListener('input', function () {
-        if (this.value.trim() !== '') {
-          element.classList.add(className);
-        } else {
-          element.classList.remove(className);
-        }
-      });
-    });
-  }
-
-  /**
-   * Инициализация swiper
-   */
-  if (document.querySelector('.swiper')) {
-
-    const swiper = new Swiper(".nav__slider", {
-      slidesPerGroup: 1,
-      slidesPerView: 'auto',
-      spaceBetween: 8,
-      grabCursor: true,
-
-      speed: 180,
-      touchRatio: 1.6,
-      resistanceRatio: 0.65,
-
-      centeredSlides: false,
-      centeredSlidesBounds: true,
-      centerInsufficientSlides: true,
-      slidesOffsetBefore: 0,
-      slidesOffsetAfter: 0,
-      loop: false,
-      simulateTouch: true,
-      watchOverflow: true,
-
-      direction: 'horizontal',
-      touchStartPreventDefault: true,
-      touchMoveStopPropagation: true,
-      threshold: 8,
-      touchAngle: 25, // ключевой параметр
-
-      freeMode: {
-        enabled: true,
-        momentum: true,
-        momentumRatio: 0.85, // меньше инерции
-        momentumVelocityRatio: 1,
-        momentumBounce: false, // убрать bounce
-        sticky: false // убрать залипание
-      },
-
-      mousewheel: {
-        forceToAxis: true,
-        sensitivity: 1,
-        releaseOnEdges: true
-      },
-    });
-
-    swiper.on('touchStart', () => {
-      if (window.lenis && !window.lenis.isStopped) {
-        window.lenis.stop();
-      }
-    });
-
-    swiper.on('touchEnd', () => {
-      if (window.lenis && window.lenis.isStopped) {
-        window.lenis.start();
-      }
-    });
-
-  }
 
   /**
    * Поведение навигации nav
