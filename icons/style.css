@@ -1,0 +1,159 @@
+@font-face {
+  font-family: 'FabricaIconFont';
+  src:  url('fonts/FabricaIconFont.eot?4dkim7');
+  src:  url('fonts/FabricaIconFont.eot?4dkim7#iefix') format('embedded-opentype'),
+    url('fonts/FabricaIconFont.ttf?4dkim7') format('truetype'),
+    url('fonts/FabricaIconFont.woff?4dkim7') format('woff'),
+    url('fonts/FabricaIconFont.svg?4dkim7#FabricaIconFont') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'FabricaIconFont' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-deserty:before {
+  content: "\e900";
+}
+.icon-cocktail:before {
+  content: "\e901";
+}
+.icon-napitki:before {
+  content: "\e902";
+}
+.icon-goryacheye:before {
+  content: "\e903";
+}
+.icon-zakuski:before {
+  content: "\e904";
+}
+.icon-qr:before {
+  content: "\e905";
+}
+.icon-points:before {
+  content: "\e906";
+}
+.icon-search:before {
+  content: "\e907";
+}
+.icon-salads:before {
+  content: "\e908";
+}
+.icon-business-lunch:before {
+  content: "\e909";
+}
+.icon-lunch:before {
+  content: "\e90a";
+}
+.icon-hookah:before {
+  content: "\e90b";
+}
+.icon-menu-meatballs:before {
+  content: "\e90c";
+}
+.icon-clock:before {
+  content: "\e90d";
+}
+.icon-menu-personal-offers:before {
+  content: "\e90e";
+}
+.icon-star:before {
+  content: "\e90f";
+}
+.icon-menu-user:before {
+  content: "\e910";
+}
+.icon-menu-like:before {
+  content: "\e911";
+}
+.icon-menu-geo:before {
+  content: "\e912";
+}
+.icon-menu-card:before {
+  content: "\e913";
+}
+.icon-close:before {
+  content: "\e914";
+}
+.icon-user:before {
+  content: "\e915";
+}
+.icon-question-mark:before {
+  content: "\e916";
+}
+.icon-menu-slang:before {
+  content: "\e917";
+}
+.icon-menu-contacts:before {
+  content: "\e918";
+}
+.icon-menu-loyalty-system:before {
+  content: "\e919";
+}
+.icon-menu-catering:before {
+  content: "\e91a";
+}
+.icon-menu-rassadka:before {
+  content: "\e91b";
+}
+.icon-menu-list:before {
+  content: "\e91c";
+}
+.icon-menu-microphone:before {
+  content: "\e91d";
+}
+.icon-meatballs:before {
+  content: "\e91e";
+}
+.icon-login:before {
+  content: "\e91f";
+}
+.icon-filter:before {
+  content: "\e920";
+}
+.icon-up:before {
+  content: "\e921";
+}
+.icon-carbohydrates:before {
+  content: "\e922";
+}
+.icon-protein:before {
+  content: "\e923";
+}
+.icon-calories:before {
+  content: "\e924";
+}
+.icon-fat:before {
+  content: "\e925";
+}
+.icon-share:before {
+  content: "\e926";
+}
+.icon-hot:before {
+  content: "\e927";
+}
+.icon-top:before {
+  content: "\e928";
+}
+.icon-star-fill:before {
+  content: "\e929";
+}
+.icon-like:before {
+  content: "\e92a";
+}
+.icon-chevron-right:before {
+  content: "\e92b";
+}
